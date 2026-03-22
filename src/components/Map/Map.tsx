@@ -24,10 +24,12 @@ export const Map = () => {
     () => fromLonLat([MAP_DEFAULT_CENTER_LNG, MAP_DEFAULT_CENTER_LAT]),
     []
   );
-  const closeMapSelector = useCallback(() => setIsMapSelectorOpen(false), [setIsMapSelectorOpen]);
+  const handleMapClick = useCallback(() => {
+    setIsMapSelectorOpen(false);
+  }, [setIsMapSelectorOpen]);
 
   return (
-    <div className={styles.mapContainer} onClick={closeMapSelector}>
+    <div className={styles.mapContainer} onClick={handleMapClick}>
       <RMap
         className={styles.rmap}
         initial={{ center: initialCenter, zoom: MAP_DEFAULT_ZOOM }}

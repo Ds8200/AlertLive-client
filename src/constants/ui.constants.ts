@@ -6,7 +6,7 @@ export const ALERT_CLEANUP_INTERVAL_MS = 60 * 1000; // 1 minute
 // Israel center: [lng, lat] in EPSG:4326
 export const MAP_DEFAULT_CENTER_LNG = 34.85;
 export const MAP_DEFAULT_CENTER_LAT = 31.5;
-export const MAP_DEFAULT_ZOOM = 7;
+export const MAP_DEFAULT_ZOOM = 7.5;
 export const MAP_FLY_TO_ZOOM = 13;
 export const MAP_USER_ZOOM = 11;
 

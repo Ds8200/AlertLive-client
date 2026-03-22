@@ -1,3 +1,9 @@
+.popoverWrapper {
+  direction: ltr;
+  display: inline-block;
+  transform: translate(-50%, calc(-100% - 14px));
+}
+
 .pulseRing {
   width: 28px;
   height: 28px;

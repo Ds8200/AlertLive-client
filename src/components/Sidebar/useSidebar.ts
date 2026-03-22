@@ -3,18 +3,12 @@
 import { useAtom } from 'jotai';
 import { useCallback, useMemo } from 'react';
 import { alertsAtom } from '@/atoms';
-import { ALERT_EXPIRY_MS } from '@/constants/ui.constants';
 
 export const useSidebar = () => {
   const [alerts, setAlerts] = useAtom(alertsAtom);
 
-  // Show newest first, filter to last hour
-  const visibleAlerts = useMemo(() => {
-    const cutoff = Date.now() - ALERT_EXPIRY_MS;
-    return [...alerts]
-      .filter((a) => new Date(a.timestamp).getTime() >= cutoff)
-      .reverse();
-  }, [alerts]);
+  // Show newest first — expiry is handled by the periodic cleanup in useWebSocket
+  const visibleAlerts = useMemo(() => [...alerts].reverse(), [alerts]);
 
   const clearAlerts = useCallback(() => setAlerts([]), [setAlerts]);
 

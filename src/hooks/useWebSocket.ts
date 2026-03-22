@@ -46,8 +46,12 @@ export const useWebSocket = () => {
   }, [checkProximity]);
 
   // One alert per region — replace old alert for same region, dedupe by alert_id
+  // Skip alerts older than the expiry threshold
   const upsertAlert = useCallback(
     (incoming: Alert) => {
+      const cutoff = Date.now() - ALERT_EXPIRY_MS;
+      if (new Date(incoming.timestamp).getTime() < cutoff) return;
+
       const regionKey = getRegionKey(incoming);
       setAlerts((prev) => {
         const filtered = prev.filter(

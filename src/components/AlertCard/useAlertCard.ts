@@ -2,7 +2,7 @@
 
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useMemo } from 'react';
-import { userLocationAtom, mapFlyToAtom } from '@/atoms';
+import { userLocationAtom, mapFlyToAtom, selectedAlertIdAtom } from '@/atoms';
 import { getSeverityCssVar, isHighPriority } from '@/utils/severityHelpers';
 import { haversine } from '@/utils/haversine';
 import { formatTimestamp, formatDistance, getCityName } from '@/utils/formatters';
@@ -12,6 +12,7 @@ import type { Alert } from '@/types';
 export const useAlertCard = (alert: Alert) => {
   const userLocation = useAtomValue(userLocationAtom);
   const setFlyTo = useSetAtom(mapFlyToAtom);
+  const setSelectedId = useSetAtom(selectedAlertIdAtom);
 
   const severityCssVar = getSeverityCssVar(alert.severity, alert.type);
   const highPriority = isHighPriority(alert.type, alert.severity);
@@ -31,6 +32,7 @@ export const useAlertCard = (alert: Alert) => {
     if (alert.lat != null && alert.lng != null) {
       setFlyTo({ lat: alert.lat, lng: alert.lng });
     }
+    setSelectedId(alert.alert_id);
   };
 
   return {

@@ -18,7 +18,7 @@ import { MAP_FLY_TO_ZOOM } from '@/constants/ui.constants';
 import { getSeverityCssVar } from '@/utils/severityHelpers';
 import { getMarkerColor } from '@/utils/colorHelpers';
 import { getCityName } from '@/utils/formatters';
-import type { MapPreset } from '@/types';
+import type { Alert, MapPreset } from '@/types';
 
 export interface AlertMarker {
   alert_id: string;
@@ -27,6 +27,7 @@ export interface AlertMarker {
   color: string;
   isHighPriority: boolean;
   label: string;
+  alert: Alert;
 }
 
 export const useMap = (rMapRef: RefObject<RMap>) => {
@@ -53,6 +54,7 @@ export const useMap = (rMapRef: RefObject<RMap>) => {
             color: getMarkerColor(cssVar),
             isHighPriority: cssVar === '--color-threat-red',
             label: getCityName(a, ''),
+            alert: a,
           };
         }),
     [alerts]
