@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useMemo, useCallback } from 'react';
 import { useSetAtom } from 'jotai';
 import { RMap, RLayerTile } from 'rlayers';
 import { fromLonLat } from 'ol/proj';
@@ -20,10 +20,14 @@ export const Map = () => {
   const { alertMarkers, currentPreset, userLocation } = useMap(rMapRef);
   const setIsMapSelectorOpen = useSetAtom(isMapSelectorOpenAtom);
 
-  const initialCenter = fromLonLat([MAP_DEFAULT_CENTER_LNG, MAP_DEFAULT_CENTER_LAT]);
+  const initialCenter = useMemo(
+    () => fromLonLat([MAP_DEFAULT_CENTER_LNG, MAP_DEFAULT_CENTER_LAT]),
+    []
+  );
+  const closeMapSelector = useCallback(() => setIsMapSelectorOpen(false), [setIsMapSelectorOpen]);
 
   return (
-    <div className={styles.mapContainer} onClick={() => setIsMapSelectorOpen(false)}>
+    <div className={styles.mapContainer} onClick={closeMapSelector}>
       <RMap
         className={styles.rmap}
         initial={{ center: initialCenter, zoom: MAP_DEFAULT_ZOOM }}

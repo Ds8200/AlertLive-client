@@ -17,23 +17,26 @@ const Map = dynamic(
   { ssr: false, loading: () => <div className={styles.mapPlaceholder} /> }
 );
 
+const ModalHost = () => {
+  const activeModal = useAtomValue(activeModalAtom);
+  return (
+    <>
+      {activeModal === ModalType.ALERT && <AlertModal />}
+      {activeModal === ModalType.ONBOARDING && <OnboardingModal />}
+    </>
+  );
+};
+
 export const AppShell = () => {
   useAppShell();
-  const activeModal = useAtomValue(activeModalAtom);
 
   return (
     <div className={styles.root}>
-      {/* Full-screen map background */}
       <Map />
-
-      {/* Floating UI layers */}
       <Header />
       <Sidebar />
       <ActionBar />
-
-      {/* Modals */}
-      {activeModal === ModalType.ALERT && <AlertModal />}
-      {activeModal === ModalType.ONBOARDING && <OnboardingModal />}
+      <ModalHost />
     </div>
   );
 };

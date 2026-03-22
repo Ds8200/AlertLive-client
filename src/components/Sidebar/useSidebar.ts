@@ -1,7 +1,7 @@
 'use client';
 
 import { useAtom } from 'jotai';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { alertsAtom } from '@/atoms';
 import { ALERT_EXPIRY_MS } from '@/constants/ui.constants';
 
@@ -16,7 +16,7 @@ export const useSidebar = () => {
       .reverse();
   }, [alerts]);
 
-  const clearAlerts = () => setAlerts([]);
+  const clearAlerts = useCallback(() => setAlerts([]), [setAlerts]);
 
   return { alerts: visibleAlerts, count: visibleAlerts.length, clearAlerts };
 };

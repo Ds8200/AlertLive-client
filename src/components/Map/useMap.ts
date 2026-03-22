@@ -1,7 +1,7 @@
 'use client';
 
 import { useAtomValue, useSetAtom } from 'jotai';
-import { useEffect, type RefObject } from 'react';
+import { useEffect, useMemo, type RefObject } from 'react';
 import type { RMap } from 'rlayers';
 import { fromLonLat } from 'ol/proj';
 import {
@@ -40,19 +40,23 @@ export const useMap = (rMapRef: RefObject<RMap>) => {
     MAP_PRESETS_BY_ID[selectedPresetId] ??
     MAP_PRESETS_BY_ID[DEFAULT_MAP_PRESET_ID];
 
-  const alertMarkers: AlertMarker[] = alerts
-    .filter((a) => a.lat != null && a.lng != null)
-    .map((a) => {
-      const cssVar = getSeverityCssVar(a.severity, a.type);
-      return {
-        alert_id: a.alert_id,
-        lat: a.lat!,
-        lng: a.lng!,
-        color: getMarkerColor(cssVar),
-        isHighPriority: cssVar === '--color-threat-red',
-        label: getCityName(a, ''),
-      };
-    });
+  const alertMarkers = useMemo<AlertMarker[]>(
+    () =>
+      alerts
+        .filter((a) => a.lat != null && a.lng != null)
+        .map((a) => {
+          const cssVar = getSeverityCssVar(a.severity, a.type);
+          return {
+            alert_id: a.alert_id,
+            lat: a.lat!,
+            lng: a.lng!,
+            color: getMarkerColor(cssVar),
+            isHighPriority: cssVar === '--color-threat-red',
+            label: getCityName(a, ''),
+          };
+        }),
+    [alerts]
+  );
 
   useEffect(() => {
     if (!flyTo || !rMapRef.current?.ol) return;

@@ -1,5 +1,6 @@
 'use client';
 
+import { memo } from 'react';
 import { useAlertCard } from './useAlertCard';
 import { AlertCardHeader } from './AlertCardHeader/AlertCardHeader';
 import { AlertCardMeta } from './AlertCardMeta/AlertCardMeta';
@@ -10,7 +11,7 @@ interface AlertCardProps {
   alert: Alert;
 }
 
-export const AlertCard = ({ alert }: AlertCardProps) => {
+const AlertCardInner = ({ alert }: AlertCardProps) => {
   const {
     severityCssVar,
     highPriority,
@@ -46,3 +47,5 @@ export const AlertCard = ({ alert }: AlertCardProps) => {
     </div>
   );
 };
+
+export const AlertCard = memo(AlertCardInner);
