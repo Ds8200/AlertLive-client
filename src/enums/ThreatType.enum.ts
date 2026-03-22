@@ -4,7 +4,7 @@ export enum ThreatType {
   MISSILES = 'missiles',
   HOSTILE_AIRCRAFT = 'hostile_aircraft',
   INFILTRATION = 'infiltration',
-  PREEMERGENCY = 'preemergency',
+  NEWS = 'news',
   UPDATE = 'update',
   EARTHQUAKE = 'earthquake',
   TSUNAMI = 'tsunami',
