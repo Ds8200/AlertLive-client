@@ -4,7 +4,7 @@ import { useAtom } from 'jotai';
 import { selectedMapPresetAtom } from '@/atoms';
 import { MAP_PRESETS } from '@/constants/mapPresets.constants';
 
-export function useMapTypeSelector(onClose: () => void) {
+export const useMapTypeSelector = (onClose: () => void) => {
   const [selectedId, setSelectedId] = useAtom(selectedMapPresetAtom);
 
   const onChange = (id: string) => {
@@ -13,4 +13,4 @@ export function useMapTypeSelector(onClose: () => void) {
   };
 
   return { presets: MAP_PRESETS, selectedId, onChange };
-}
+};

@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c \"import json,sys; data=json.load\\(sys.stdin\\); [print\\(item[''''text'''']\\) for item in data if item.get\\(''''type''''\\)==''''text'''']\")",
+      "Bash(grep -r 'export function' /c/Users/Daniel/Desktop/my_programs/python/oref_alerts/AlertLive/client/src --include=*.ts --include=*.tsx)"
+    ]
+  }
+}

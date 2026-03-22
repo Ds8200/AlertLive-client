@@ -5,6 +5,6 @@ const AppShell = dynamic(
   { ssr: false }
 );
 
-export default function HomePage() {
-  return <AppShell />;
-}
+const HomePage = () => <AppShell />;
+
+export default HomePage;

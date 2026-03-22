@@ -9,7 +9,7 @@ import { lsGet } from '@/utils/localStorage';
 import { useWebSocket } from '@/hooks/useWebSocket';
 import { useGeolocation } from '@/hooks/useGeolocation';
 
-export function useAppShell() {
+export const useAppShell = () => {
   const setActiveModal = useSetAtom(activeModalAtom);
 
   useWebSocket();

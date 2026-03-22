@@ -2,13 +2,13 @@
 
 import { useEffect } from 'react';
 
-export default function ErrorPage({
+const ErrorPage = ({
   error,
   reset,
 }: {
   error: Error & { digest?: string };
   reset: () => void;
-}) {
+}) => {
   useEffect(() => {
     console.error(error);
   }, [error]);
@@ -47,4 +47,6 @@ export default function ErrorPage({
       </button>
     </div>
   );
-}
+};
+
+export default ErrorPage;

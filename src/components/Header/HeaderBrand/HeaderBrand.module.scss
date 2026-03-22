@@ -1,0 +1,32 @@
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-shrink: 0;
+}
+
+.logo {
+  font-size: 20px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  transform: translateY(-2px);
+}
+
+.appName {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: -0.3px;
+}
+
+.liveBadge {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: #fff;
+  background: var(--color-threat-red);
+  border-radius: 4px;
+  padding: 2px 6px;
+  letter-spacing: 0.5px;
+  animation: pulse-dot 1.4s ease-in-out infinite;
+}

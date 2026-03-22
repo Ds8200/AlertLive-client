@@ -1,6 +1,8 @@
 'use client';
 
 import { useAlertModal } from './useAlertModal';
+import { DetailRow } from './DetailRow/DetailRow';
+import { ModalOverlay } from '@/components/ui/ModalOverlay/ModalOverlay';
 import { ALERT_MODAL_LABELS } from '@/constants/ui.constants';
 import styles from './AlertModal.module.scss';
 
@@ -11,7 +13,7 @@ export const AlertModal = () => {
   if (!nearbyAlert) return null;
 
   return (
-    <div className={styles.overlay} onClick={dismiss}>
+    <ModalOverlay onBackdropClick={dismiss} variant="alert">
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <div className={styles.icon}>{typeIcon}</div>
 
@@ -38,13 +40,6 @@ export const AlertModal = () => {
           {ALERT_MODAL_LABELS.dismiss}
         </button>
       </div>
-    </div>
+    </ModalOverlay>
   );
 };
-
-const DetailRow = ({ label, value }: { label: string; value: string }) => (
-  <div className={styles.detailRow}>
-    <span className={styles.detailLabel}>{label}:</span>
-    <span className={styles.detailValue}>{value}</span>
-  </div>
-);

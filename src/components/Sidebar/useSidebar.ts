@@ -3,14 +3,20 @@
 import { useAtom } from 'jotai';
 import { useMemo } from 'react';
 import { alertsAtom } from '@/atoms';
+import { ALERT_EXPIRY_MS } from '@/constants/ui.constants';
 
-export function useSidebar() {
+export const useSidebar = () => {
   const [alerts, setAlerts] = useAtom(alertsAtom);
 
-  // Show newest first
-  const sortedAlerts = useMemo(() => [...alerts].reverse(), [alerts]);
+  // Show newest first, filter to last hour
+  const visibleAlerts = useMemo(() => {
+    const cutoff = Date.now() - ALERT_EXPIRY_MS;
+    return [...alerts]
+      .filter((a) => new Date(a.timestamp).getTime() >= cutoff)
+      .reverse();
+  }, [alerts]);
 
   const clearAlerts = () => setAlerts([]);
 
-  return { alerts: sortedAlerts, count: alerts.length, clearAlerts };
-}
+  return { alerts: visibleAlerts, count: visibleAlerts.length, clearAlerts };
+};

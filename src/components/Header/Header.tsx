@@ -1,21 +1,18 @@
 'use client';
 
 import { useHeader } from './useHeader';
+import { HeaderBrand } from './HeaderBrand/HeaderBrand';
+import { StatBadge } from './StatBadge/StatBadge';
+import { WsIndicator } from './WsIndicator/WsIndicator';
 import { HEADER_LABELS } from '@/constants/ui.constants';
 import styles from './Header.module.scss';
 
 export const Header = () => {
-  const { stats, statusColor, statusLabel, isLiveMode } = useHeader();
+  const { stats, isLiveMode } = useHeader();
 
   return (
     <header className={styles.header}>
-      <div className={styles.brand}>
-        <span className={styles.logo}>🚨</span>
-        <span className={styles.appName}>{HEADER_LABELS.appName}</span>
-        {isLiveMode && (
-          <span className={styles.liveBadge}>{HEADER_LABELS.live}</span>
-        )}
-      </div>
+      <HeaderBrand isLiveMode={isLiveMode} />
 
       <div className={styles.stats}>
         <StatBadge label={HEADER_LABELS.total} value={stats.total} variant="neutral" />
@@ -23,29 +20,7 @@ export const Header = () => {
         <StatBadge label={HEADER_LABELS.ended} value={stats.ended} variant="success" />
       </div>
 
-      <div className={styles.wsIndicator}>
-        <span
-          className={styles.wsDot}
-          style={{ background: statusColor }}
-          title={statusLabel}
-        />
-        <span className={styles.wsLabel}>{statusLabel}</span>
-      </div>
+      <WsIndicator />
     </header>
   );
 };
-
-const StatBadge = ({
-  label,
-  value,
-  variant,
-}: {
-  label: string;
-  value: number;
-  variant: 'neutral' | 'danger' | 'success';
-}) => (
-  <div className={`${styles.statBadge} ${styles[variant]}`}>
-    <span className={styles.statValue}>{value}</span>
-    <span className={styles.statLabel}>{label}</span>
-  </div>
-);

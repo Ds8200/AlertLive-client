@@ -9,3 +9,4 @@ export { isMutedAtom } from './isMutedAtom';
 export { isLiveModeAtom } from './isLiveModeAtom';
 export { mapFlyToAtom } from './mapFlyToAtom';
 export type { FlyToTarget } from './mapFlyToAtom';
+export { isMapSelectorOpenAtom } from './isMapSelectorOpenAtom';

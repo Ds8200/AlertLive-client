@@ -8,7 +8,7 @@ import { LS_KEY_ONBOARDED } from '@/constants/ui.constants';
 import { ONBOARDING_STEPS } from '@/constants/severity.constants';
 import { lsSet } from '@/utils/localStorage';
 
-export function useOnboardingModal() {
+export const useOnboardingModal = () => {
   const setActiveModal = useSetAtom(activeModalAtom);
   const [step, setStep] = useState(0);
 

@@ -7,19 +7,15 @@ export const metadata: Metadata = {
   description: 'מערכת ניטור התרעות ביטחוניות בזמן אמת',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <html lang="he" dir="rtl">
-      <head>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚨</text></svg>"/>
-      </head>
-      <body>
-        <JotaiProvider>{children}</JotaiProvider>
-      </body>
-    </html>
-  );
-}
+const RootLayout = ({ children }: { children: React.ReactNode }) => (
+  <html lang="he" dir="rtl">
+    <head>
+      <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚨</text></svg>"/>
+    </head>
+    <body>
+      <JotaiProvider>{children}</JotaiProvider>
+    </body>
+  </html>
+);
+
+export default RootLayout;

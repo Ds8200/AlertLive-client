@@ -17,6 +17,7 @@ import {
 import { MAP_FLY_TO_ZOOM } from '@/constants/ui.constants';
 import { getSeverityCssVar } from '@/utils/severityHelpers';
 import { getMarkerColor } from '@/utils/colorHelpers';
+import { getCityName } from '@/utils/formatters';
 import type { MapPreset } from '@/types';
 
 export interface AlertMarker {
@@ -28,7 +29,7 @@ export interface AlertMarker {
   label: string;
 }
 
-export function useMap(rMapRef: RefObject<RMap>) {
+export const useMap = (rMapRef: RefObject<RMap>) => {
   const alerts = useAtomValue(alertsAtom);
   const selectedPresetId = useAtomValue(selectedMapPresetAtom);
   const userLocation = useAtomValue(userLocationAtom);
@@ -49,11 +50,10 @@ export function useMap(rMapRef: RefObject<RMap>) {
         lng: a.lng!,
         color: getMarkerColor(cssVar),
         isHighPriority: cssVar === '--color-threat-red',
-        label: a.region_name || a.oref_city || '',
+        label: getCityName(a, ''),
       };
     });
 
-  // Handle fly-to requests from AlertCard clicks
   useEffect(() => {
     if (!flyTo || !rMapRef.current?.ol) return;
 
@@ -66,4 +66,4 @@ export function useMap(rMapRef: RefObject<RMap>) {
   }, [flyTo, rMapRef, setFlyTo]);
 
   return { alertMarkers, currentPreset, userLocation };
-}
+};

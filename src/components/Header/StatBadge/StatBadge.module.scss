@@ -1,0 +1,50 @@
+.statBadge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 52px;
+  padding: 4px 10px;
+  border-radius: var(--border-radius-sm);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-glass);
+
+  &.neutral .statValue {
+    color: var(--color-text-primary);
+  }
+
+  &.danger .statValue {
+    color: var(--color-threat-red);
+  }
+
+  &.success .statValue {
+    color: var(--color-threat-green);
+  }
+}
+
+.statValue {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.statLabel {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-top: 1px;
+}
+
+@media (max-width: 640px) {
+  .statBadge {
+    min-width: 36px;
+    padding: 3px 7px;
+  }
+
+  .statValue {
+    font-size: var(--font-size-base);
+  }
+
+  .statLabel {
+    font-size: 10px;
+  }
+}

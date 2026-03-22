@@ -11,10 +11,13 @@ import { ModalType } from '@/enums/ModalType.enum';
 import { haversine } from '@/utils/haversine';
 import { PROXIMITY_RADIUS_KM } from '@/constants/ui.constants';
 import type { Alert } from '@/types';
+import { ThreatType } from '@/enums/ThreatType.enum';
 import { useAudio } from './useAudio';
 
-export function useProximityCheck() {
+export const useProximityCheck = () => {
   const userLocation = useAtomValue(userLocationAtom);
+  const activeModal = useAtomValue(activeModalAtom);
+  const nearbyAlert = useAtomValue(nearbyAlertAtom);
   const setNearbyAlert = useSetAtom(nearbyAlertAtom);
   const setActiveModal = useSetAtom(activeModalAtom);
   const { play } = useAudio();
@@ -30,15 +33,24 @@ export function useProximityCheck() {
         alert.lng
       );
 
-      if (distance <= PROXIMITY_RADIUS_KM) {
-        const alertWithDistance: Alert = { ...alert, distanceKm: distance };
+      if (distance > PROXIMITY_RADIUS_KM) return;
+      if (alert.type === ThreatType.UPDATE) return;
+
+      const alertWithDistance: Alert = { ...alert, distanceKm: distance };
+      const alertAlreadyOpen = activeModal === ModalType.ALERT;
+
+      if (!alertAlreadyOpen) {
+        // First proximity alert — open modal and play siren once
         setNearbyAlert(alertWithDistance);
         setActiveModal(ModalType.ALERT);
         play();
+      } else if (nearbyAlert?.distanceKm == null || distance < nearbyAlert.distanceKm) {
+        // Modal already open — silently update to the closer alert, no reopen or replay
+        setNearbyAlert(alertWithDistance);
       }
     },
-    [userLocation, setNearbyAlert, setActiveModal, play]
+    [userLocation, activeModal, nearbyAlert, setNearbyAlert, setActiveModal, play]
   );
 
   return { checkProximity };
-}
+};

@@ -16,36 +16,6 @@
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
 }
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  flex-shrink: 0;
-}
-
-.logo {
-  font-size: 20px;
-  line-height: 1;
-}
-
-.appName {
-  font-size: var(--font-size-lg);
-  font-weight: 700;
-  color: var(--color-text-primary);
-  letter-spacing: -0.3px;
-}
-
-.liveBadge {
-  font-size: var(--font-size-xs);
-  font-weight: 700;
-  color: #fff;
-  background: var(--color-threat-red);
-  border-radius: 4px;
-  padding: 2px 6px;
-  letter-spacing: 0.5px;
-  animation: pulse-dot 1.4s ease-in-out infinite;
-}
-
 .stats {
   display: flex;
   align-items: center;
@@ -54,79 +24,9 @@
   justify-content: center;
 }
 
-.statBadge {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 52px;
-  padding: 4px 10px;
-  border-radius: var(--border-radius-sm);
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border-glass);
-
-  &.neutral .statValue {
-    color: var(--color-text-primary);
-  }
-  &.danger .statValue {
-    color: var(--color-threat-red);
-  }
-  &.success .statValue {
-    color: var(--color-threat-green);
-  }
-}
-
-.statValue {
-  font-size: var(--font-size-lg);
-  font-weight: 700;
-  line-height: 1.1;
-  font-variant-numeric: tabular-nums;
-}
-
-.statLabel {
-  font-size: var(--font-size-xs);
-  color: var(--color-text-muted);
-  margin-top: 1px;
-}
-
-.wsIndicator {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-shrink: 0;
-}
-
-.wsDot {
-  display: inline-block;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  box-shadow: 0 0 6px currentColor;
-  animation: pulse-dot 2s ease-in-out infinite;
-}
-
-.wsLabel {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
-}
-
-// Responsive
 @media (max-width: 640px) {
   .header {
     padding: 0 var(--space-md);
     gap: var(--space-sm);
-  }
-
-  .wsLabel {
-    display: none;
-  }
-
-  .statLabel {
-    display: none;
-  }
-
-  .statBadge {
-    min-width: 36px;
-    padding: 3px 7px;
   }
 }

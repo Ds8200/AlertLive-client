@@ -1,6 +1,8 @@
 'use client';
 
 import { useAlertCard } from './useAlertCard';
+import { AlertCardHeader } from './AlertCardHeader/AlertCardHeader';
+import { AlertCardMeta } from './AlertCardMeta/AlertCardMeta';
 import type { Alert } from '@/types';
 import styles from './AlertCard.module.scss';
 
@@ -16,10 +18,9 @@ export const AlertCard = ({ alert }: AlertCardProps) => {
     typeIcon,
     formattedTime,
     formattedDistance,
+    city,
     handleClick,
   } = useAlertCard(alert);
-
-  const city = alert.region_name || alert.oref_city || 'לא ידוע';
 
   return (
     <div
@@ -33,21 +34,13 @@ export const AlertCard = ({ alert }: AlertCardProps) => {
       <div className={styles.colorBar} />
 
       <div className={styles.content}>
-        <div className={styles.topRow}>
-          <span className={styles.icon}>{typeIcon}</span>
-          <span className={styles.city}>{city}</span>
-          <span className={styles.time}>{formattedTime}</span>
-        </div>
-
-        <div className={styles.bottomRow}>
-          <span className={styles.typeLabel}>{typeLabel}</span>
-          {formattedDistance && (
-            <span className={styles.distance}>📍 {formattedDistance}</span>
-          )}
-        </div>
-
+        <AlertCardHeader icon={typeIcon} city={city} formattedTime={formattedTime} />
+        <AlertCardMeta typeLabel={typeLabel} formattedDistance={formattedDistance} />
         {alert.oref_title && (
           <p className={styles.title}>{alert.oref_title}</p>
+        )}
+        {alert.oref_desc && (
+          <p className={styles.desc}>{alert.oref_desc}</p>
         )}
       </div>
     </div>

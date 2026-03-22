@@ -10,12 +10,17 @@ import {
 } from '@/atoms';
 import { WsStatus } from '@/enums/WsStatus.enum';
 import { WS_URL, WS_HISTORY_END_TYPE } from '@/constants/ws.constants';
-import { MAX_ALERT_CARDS } from '@/constants/ui.constants';
-import { RECONNECT_INTERVAL_MS } from '@/constants/ui.constants';
+import {
+  RECONNECT_INTERVAL_MS,
+  ALERT_EXPIRY_MS,
+  ALERT_CLEANUP_INTERVAL_MS,
+} from '@/constants/ui.constants';
 import type { Alert, WsMessage } from '@/types';
 import { useProximityCheck } from './useProximityCheck';
 
-export function useWebSocket() {
+const getRegionKey = (alert: Alert): string => alert.oref_city;
+
+export const useWebSocket = () => {
   const setAlerts = useSetAtom(alertsAtom);
   const setWsStatus = useSetAtom(wsStatusAtom);
   const setIsLiveMode = useSetAtom(isLiveModeAtom);
@@ -27,6 +32,7 @@ export function useWebSocket() {
   const reconnectTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isLiveModeRef = useRef(isLiveMode);
   const userLocationRef = useRef(userLocation);
+  const checkProximityRef = useRef(checkProximity);
 
   // Keep refs in sync to avoid stale closures in WS callbacks
   useEffect(() => {
@@ -35,27 +41,35 @@ export function useWebSocket() {
   useEffect(() => {
     userLocationRef.current = userLocation;
   }, [userLocation]);
+  useEffect(() => {
+    checkProximityRef.current = checkProximity;
+  }, [checkProximity]);
 
+  // One alert per region — replace old alert for same region, dedupe by alert_id
   const upsertAlert = useCallback(
     (incoming: Alert) => {
+      const regionKey = getRegionKey(incoming);
       setAlerts((prev) => {
-        const idx = prev.findIndex((a) => a.alert_id === incoming.alert_id);
-        let next: Alert[];
-        if (idx >= 0) {
-          next = [...prev];
-          next[idx] = incoming;
-        } else {
-          next = [...prev, incoming];
-        }
-        // Cap list size — remove oldest
-        if (next.length > MAX_ALERT_CARDS) {
-          next = next.slice(next.length - MAX_ALERT_CARDS);
-        }
-        return next;
+        const filtered = prev.filter(
+          (a) => a.alert_id !== incoming.alert_id && getRegionKey(a) !== regionKey
+        );
+        return [...filtered, incoming];
       });
     },
     [setAlerts]
   );
+
+  // Periodic cleanup — remove alerts older than 1 hour
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const cutoff = Date.now() - ALERT_EXPIRY_MS;
+      setAlerts((prev) =>
+        prev.filter((a) => new Date(a.timestamp).getTime() >= cutoff)
+      );
+    }, ALERT_CLEANUP_INTERVAL_MS);
+
+    return () => clearInterval(interval);
+  }, [setAlerts]);
 
   const connect = useCallback(() => {
     if (wsRef.current?.readyState === WebSocket.OPEN) return;
@@ -85,7 +99,7 @@ export function useWebSocket() {
         upsertAlert(alert);
 
         if (isLiveModeRef.current && userLocationRef.current) {
-          checkProximity(alert);
+          checkProximityRef.current(alert);
         }
       } catch {
         // Malformed message; ignore
@@ -102,7 +116,7 @@ export function useWebSocket() {
       setWsStatus(WsStatus.ERROR);
       ws.close();
     };
-  }, [setWsStatus, setIsLiveMode, upsertAlert, checkProximity]);
+  }, [setWsStatus, setIsLiveMode, upsertAlert]);
 
   useEffect(() => {
     connect();
@@ -113,4 +127,4 @@ export function useWebSocket() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-}
+};

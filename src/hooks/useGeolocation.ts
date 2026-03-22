@@ -4,7 +4,7 @@ import { useSetAtom } from 'jotai';
 import { useEffect, useState } from 'react';
 import { userLocationAtom } from '@/atoms';
 
-export function useGeolocation() {
+export const useGeolocation = () => {
   const setUserLocation = useSetAtom(userLocationAtom);
   const [isLocating, setIsLocating] = useState(false);
 

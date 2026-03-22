@@ -1,6 +1,7 @@
 export const PROXIMITY_RADIUS_KM = 50;
-export const MAX_ALERT_CARDS = 100;
 export const RECONNECT_INTERVAL_MS = 3000;
+export const ALERT_EXPIRY_MS = 60 * 60 * 1000; // 1 hour
+export const ALERT_CLEANUP_INTERVAL_MS = 60 * 1000; // 1 minute
 
 // Israel center: [lng, lat] in EPSG:4326
 export const MAP_DEFAULT_CENTER_LNG = 34.85;
@@ -18,7 +19,7 @@ export const HEADER_LABELS = {
   total: 'סה״כ',
   active: 'פעילות',
   ended: 'הסתיימו',
-  live: 'חי',
+  live: 'שידור חי',
   connecting: 'מתחבר...',
   disconnected: 'מנותק',
 };
@@ -31,6 +32,7 @@ export const SIDEBAR_LABELS = {
 };
 
 export const ACTION_BAR_LABELS = {
+  toggle: 'פתח תפריט',
   mute: 'השתק',
   unmute: 'בטל השתקה',
   location: 'המיקום שלי',

@@ -56,33 +56,15 @@
   padding: var(--space-md);
 }
 
-.detailRow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-sm);
-}
-
-.detailLabel {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
-}
-
-.detailValue {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-primary);
-  font-weight: 500;
-}
-
 .title {
   font-size: var(--font-size-base);
-  color: var(--color-text-secondary);
+  color: var(--color-text-primary);
   text-align: center;
 }
 
 .desc {
   font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   text-align: center;
   line-height: 1.5;
 }

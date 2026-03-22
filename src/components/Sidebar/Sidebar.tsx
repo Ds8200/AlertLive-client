@@ -1,6 +1,8 @@
 'use client';
 
 import { useSidebar } from './useSidebar';
+import { SidebarHeader } from './SidebarHeader/SidebarHeader';
+import { SidebarEmpty } from './SidebarEmpty/SidebarEmpty';
 import { AlertCard } from '@/components/AlertCard/AlertCard';
 import { SIDEBAR_LABELS } from '@/constants/ui.constants';
 import styles from './Sidebar.module.scss';
@@ -10,25 +12,20 @@ export const Sidebar = () => {
 
   return (
     <aside className={styles.sidebar}>
-      <div className={styles.sidebarHeader}>
-        <span className={styles.title}>
-          {SIDEBAR_LABELS.title}
-          {count > 0 && <span className={styles.badge}>{count}</span>}
-        </span>
-        {count > 0 && (
-          <button className={styles.clearBtn} onClick={clearAlerts}>
-            {SIDEBAR_LABELS.clear}
-          </button>
-        )}
-      </div>
+      <SidebarHeader
+        title={SIDEBAR_LABELS.title}
+        clearLabel={SIDEBAR_LABELS.clear}
+        count={count}
+        onClear={clearAlerts}
+      />
 
       <div className={styles.scrollArea}>
         {count === 0 ? (
-          <div className={styles.emptyState}>
-            <span className={styles.emptyIcon}>📡</span>
-            <p className={styles.emptyText}>{SIDEBAR_LABELS.empty}</p>
-            <p className={styles.emptyDesc}>{SIDEBAR_LABELS.emptyDesc}</p>
-          </div>
+          <SidebarEmpty
+            icon="📡"
+            text={SIDEBAR_LABELS.empty}
+            description={SIDEBAR_LABELS.emptyDesc}
+          />
         ) : (
           <div className={styles.cardList}>
             {alerts.map((alert) => (

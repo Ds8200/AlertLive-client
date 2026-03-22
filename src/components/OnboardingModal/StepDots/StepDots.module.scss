@@ -1,0 +1,20 @@
+.dots {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-text-muted);
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+
+.dotActive {
+  background: var(--color-accent);
+  transform: scale(1.3);
+}

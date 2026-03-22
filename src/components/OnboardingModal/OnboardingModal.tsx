@@ -1,61 +1,36 @@
 'use client';
 
 import { useOnboardingModal } from './useOnboardingModal';
+import { StepContent } from './StepContent/StepContent';
+import { StepDots } from './StepDots/StepDots';
+import { StepNav } from './StepNav/StepNav';
+import { ModalOverlay } from '@/components/ui/ModalOverlay/ModalOverlay';
 import styles from './OnboardingModal.module.scss';
 
 export const OnboardingModal = () => {
-  const {
-    step,
-    totalSteps,
-    currentStep,
-    isFirst,
-    isLast,
-    next,
-    prev,
-    finish,
-  } = useOnboardingModal();
+  const { step, totalSteps, currentStep, isFirst, isLast, next, prev, finish } =
+    useOnboardingModal();
 
   return (
-    <div className={styles.overlay}>
+    <ModalOverlay>
       <div className={styles.modal}>
-        <div className={styles.stepIcon}>{currentStep.icon}</div>
-
-        <div className={styles.body}>
-          <h2 className={styles.title}>{currentStep.title}</h2>
-          <p className={styles.description}>{currentStep.description}</p>
-        </div>
-
-        <div className={styles.dots}>
-          {Array.from({ length: totalSteps }).map((_, i) => (
-            <span
-              key={i}
-              className={`${styles.dot} ${i === step ? styles.dotActive : ''}`}
-            />
-          ))}
-        </div>
-
-        <div className={styles.actions}>
-          {!isFirst && (
-            <button className={styles.btnSecondary} onClick={prev}>
-              הקודם
-            </button>
-          )}
-          <div className={styles.actionsSpacer} />
-          {isLast ? (
-            <button className={styles.btnPrimary} onClick={finish}>
-              בואו נתחיל!
-            </button>
-          ) : (
-            <button className={styles.btnPrimary} onClick={next}>
-              הבא
-            </button>
-          )}
-        </div>
-
+        <StepContent
+          icon={currentStep.icon}
+          title={currentStep.title}
+          description={currentStep.description}
+        />
+        <StepDots total={totalSteps} current={step} />
+        <StepNav
+          isFirst={isFirst}
+          isLast={isLast}
+          onPrev={prev}
+          onNext={next}
+          onFinish={finish}
+        />
         <button className={styles.skipBtn} onClick={finish}>
           דלג
         </button>
       </div>
-    </div>
+    </ModalOverlay>
   );
 };

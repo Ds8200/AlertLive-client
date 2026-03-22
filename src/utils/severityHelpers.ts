@@ -16,7 +16,7 @@ const NATURAL_THREAT_TYPES: string[] = [
   ThreatType.HAZMAT,
 ];
 
-export function getSeverityCssVar(severity: string, type: string): string {
+export const getSeverityCssVar = (severity: string, type: string): string => {
   if (type === ThreatType.UPDATE) return '--color-threat-green';
   if (HIGH_THREAT_TYPES.includes(type) || severity === AlertSeverity.CRITICAL)
     return '--color-threat-red';
@@ -25,14 +25,9 @@ export function getSeverityCssVar(severity: string, type: string): string {
     return '--color-threat-orange';
   if (severity === AlertSeverity.INFO) return '--color-threat-yellow';
   return '--color-threat-blue';
-}
+};
 
-export function isHighPriority(type: string, severity: string): boolean {
-  return (
-    HIGH_THREAT_TYPES.includes(type) || severity === AlertSeverity.CRITICAL
-  );
-}
+export const isHighPriority = (type: string, severity: string): boolean =>
+  HIGH_THREAT_TYPES.includes(type) || severity === AlertSeverity.CRITICAL;
 
-export function isResolved(type: string): boolean {
-  return type === ThreatType.UPDATE;
-}
+export const isResolved = (type: string): boolean => type === ThreatType.UPDATE;

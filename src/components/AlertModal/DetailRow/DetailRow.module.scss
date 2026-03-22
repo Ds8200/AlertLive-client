@@ -1,0 +1,17 @@
+.detailRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.detailLabel {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.detailValue {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  font-weight: 500;
+}

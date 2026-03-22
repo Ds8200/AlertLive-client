@@ -11,7 +11,6 @@
   width: 100%;
   height: 100%;
 
-  // Remove default OL attribution (we style our own)
   :global(.ol-attribution) {
     bottom: 4px;
     right: 4px;
@@ -32,27 +31,5 @@
 
   :global(.ol-rotate) {
     display: none;
-  }
-}
-
-// Pulse ring animation for high-priority markers
-.pulseRing {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: 2px solid var(--color-threat-red);
-  animation: pulseRingAnim 1.6s ease-out infinite;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-}
-
-@keyframes pulseRingAnim {
-  0% {
-    transform: translate(-50%, -50%) scale(0.6);
-    opacity: 0.9;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(2.2);
-    opacity: 0;
   }
 }
